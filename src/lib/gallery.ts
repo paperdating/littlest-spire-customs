@@ -61,7 +61,7 @@ export const galleryItems: GalleryItem[] = [
     "/gallery/doll-3.jpg",
 	"/gallery/doll-4.jpg",
 	"/gallery/doll-5.jpg",
-    // ],
+     ],
     orderType: "similar",
     details:
       "Each doll is about 10 inches high, and always handmade. I have made: DND (humanoid) characters, FFXIV characters, yumeshippers. If you're interested in a non-humanoid character, please send me a message first!",
