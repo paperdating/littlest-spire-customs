@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import PaymentButtons from "@/components/PaymentButtons";
 import { generateTrackingCode } from "@/lib/utils";
-import { getGalleryItem, type GalleryItem } from "@/lib/gallery";
+import { getGalleryItem, getItemImages, type GalleryItem } from "@/lib/gallery";
 
 /*
   SETUP:
@@ -174,10 +174,10 @@ function RequestForm() {
       {selectedItem && (
         <div className="mb-6 flex items-start gap-4 rounded-xl border border-[var(--accent)]/40 bg-[var(--card)] p-4">
           <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-violet-950 to-indigo-950">
-            {selectedItem.image ? (
+            {getItemImages(selectedItem)[0] ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={selectedItem.image}
+                src={getItemImages(selectedItem)[0]}
                 alt={selectedItem.title}
                 className="h-full w-full object-cover"
               />
@@ -204,6 +204,8 @@ function RequestForm() {
               {selectedItem.orderType === "available"
                 ? "Marked as available / can be fulfilled as shown or with small changes."
                 : "Made-to-order inspired by this piece — tell me your preferred colors, size, or changes."}
+              {getItemImages(selectedItem).length > 1 &&
+                ` · ${getItemImages(selectedItem).length} sample photos on gallery card`}
             </p>
           </div>
           <Link

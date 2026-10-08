@@ -111,14 +111,28 @@ Edit the list in **`src/lib/gallery.ts`**.
 
 Each item needs: `id`, `title`, `description`, `tag`, `priceHint`, `emoji`, and `orderType` (`"similar"` or `"available"`).
 
-### Adding real photos
+### Adding real photos (one or many per listing)
 
-1. Drop images into **`public/gallery/`** (e.g. `plush-companion.jpg`)
-2. In `gallery.ts`, set:
+1. Drop images into **`public/gallery/`**
+2. In `gallery.ts`, use an **`images`** array for multiple samples:
+
+   ```ts
+   images: [
+     "/gallery/plush-1.jpg",
+     "/gallery/plush-2.jpg",
+     "/gallery/plush-3.jpg",
+   ],
+   ```
+
+   Or a single photo:
+
    ```ts
    image: "/gallery/plush-companion.jpg",
    ```
-3. If `image` is missing, the emoji placeholder is used automatically.
+
+3. If neither is set, the emoji placeholder is used.
+
+On the gallery page, multi-photo listings get arrow buttons and dots to browse.
 
 Recommended size: ~800–1200px wide, square or 4:3, JPG/WebP.
 
@@ -149,4 +163,3 @@ public/
 ```
 
 Enjoy crafting! 🏰
-"# littlest-spire-customs" 

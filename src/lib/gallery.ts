@@ -5,11 +5,16 @@ export interface GalleryItem {
   tag: string;
   /** Short price guidance shown on the card, e.g. "From $85" or "$40" */
   priceHint: string;
-  /** Emoji fallback when no image is set */
+  /** Emoji fallback when no images are set */
   emoji: string;
   /**
-   * Path to image in /public, e.g. "/gallery/plush.jpg"
-   * Leave empty or omit to use the emoji placeholder.
+   * Multiple photos for this listing.
+   * Paths relative to /public, e.g. "/gallery/plush-1.jpg"
+   */
+  images?: string[];
+  /**
+   * Single photo (legacy). Prefer `images` when you have more than one.
+   * Still supported for convenience.
    */
   image?: string;
   /**
@@ -21,28 +26,45 @@ export interface GalleryItem {
   details?: string;
 }
 
+/** All image paths for an item (images[] first, then single image) */
+export function getItemImages(item: GalleryItem): string[] {
+  if (item.images && item.images.length > 0) return item.images;
+  if (item.image) return [item.image];
+  return [];
+}
+
 /**
  * EDIT THIS LIST to add / remove your work.
  *
- * To use a real photo:
- * 1. Put the image in public/gallery/ (e.g. public/gallery/plush.jpg)
- * 2. Set image: "/gallery/plush.jpg"
+ * Multiple photos per listing:
+ *   images: [
+ *     "/gallery/plush-1.jpg",
+ *     "/gallery/plush-2.jpg",
+ *     "/gallery/plush-3.jpg",
+ *   ],
  *
- * Recommended image size: ~800–1200px wide, square or 4:3 works best.
+ * Put files in public/gallery/
+ * Recommended size: ~800–1200px wide, square or 4:3.
  */
 export const galleryItems: GalleryItem[] = [
   {
-    id: "plush-companion",
-    title: "Custom Plush Companion",
+    id: "crochet-doll",
+    title: "Custom Original Character Crochet Dolls",
     description:
-      "Soft embroidered creature with unique accessories. Fully poseable and made with high-quality fabrics.",
-    tag: "Plush",
-    priceHint: "From $85",
+      "Let me create a custom doll of your OC!",
+    tag: "Crochet Dolls",
+    priceHint: "From $85 + $20 shipping",
     emoji: "🧸",
-    // image: "/gallery/plush-companion.jpg",
+    images: [
+    "/gallery/doll-1.png",
+    "/gallery/doll-2.jpg",
+    "/gallery/doll-3.jpg",
+	"/gallery/doll-4.jpg",
+	"/gallery/doll-5.jpg",
+    // ],
     orderType: "similar",
     details:
-      "Each plush is hand-sewn. You can request different colors, sizes, or accessories inspired by this design.",
+      "Each doll is about 10 inches high, and always handmade. I have made: DND (humanoid) characters, FFXIV characters, yumeshippers. If you're interested in a non-humanoid character, please send me a message first!",
   },
   {
     id: "miniature-set",
@@ -52,7 +74,6 @@ export const galleryItems: GalleryItem[] = [
     tag: "Miniatures",
     priceHint: "From $45",
     emoji: "🧙",
-    // image: "/gallery/miniature-set.jpg",
     orderType: "similar",
     details:
       "Painted with acrylics and sealed. Tell me the faction, colors, or character concept you want.",
@@ -65,7 +86,6 @@ export const galleryItems: GalleryItem[] = [
     tag: "Woodcraft",
     priceHint: "From $120",
     emoji: "📦",
-    // image: "/gallery/jewelry-box.jpg",
     orderType: "similar",
     details:
       "Can be personalized with initials, motifs, or different wood stains.",
@@ -78,7 +98,6 @@ export const galleryItems: GalleryItem[] = [
     tag: "Accessories",
     priceHint: "From $25",
     emoji: "🔖",
-    // image: "/gallery/bookmarks.jpg",
     orderType: "available",
     details:
       "Often available as ready-made sets or made-to-order with your preferred design.",
@@ -91,7 +110,6 @@ export const galleryItems: GalleryItem[] = [
     tag: "Jewelry",
     priceHint: "From $40",
     emoji: "💎",
-    // image: "/gallery/crystal-pendant.jpg",
     orderType: "similar",
   },
   {
@@ -102,7 +120,6 @@ export const galleryItems: GalleryItem[] = [
     tag: "Accessories",
     priceHint: "From $35",
     emoji: "🎲",
-    // image: "/gallery/dice-bag.jpg",
     orderType: "similar",
   },
 ];
