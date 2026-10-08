@@ -55,14 +55,19 @@ function StatusContent() {
         const res = await fetch(STATUS_SHEET_CSV, { cache: "no-store" });
         if (!res.ok) throw new Error("Could not load status sheet");
         const text = await res.text();
-        const rows = parseCSV(text) as Row[];
+        const rows = parseCSV(text);
         // Normalize keys to lowercase for safety
-        const normalized = rows.map((r) => {
+        const normalized: Row[] = rows.map((row) => {
           const obj: Record<string, string> = {};
-          Object.entries(r).forEach(([k, v]) => {
-            obj[k.toLowerCase().trim()] = v;
+          Object.entries(row).forEach(([key, value]) => {
+            obj[key.toLowerCase().trim()] = value;
           });
-          return obj as unknown as Row;
+          return {
+            tracking_code: obj.tracking_code ?? "",
+            status: obj.status ?? "",
+            progress_notes: obj.progress_notes ?? "",
+            created_at: obj.created_at ?? "",
+          };
         });
         setPublicQueue(
           normalized
